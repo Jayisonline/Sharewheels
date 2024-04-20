@@ -1,73 +1,154 @@
-import { View, Image, Text, TouchableOpacity, SafeAreaView, ScrollView, Platform, TextInput } from "react-native"
+import { View, Image, Text, TouchableOpacity, SafeAreaView, ScrollView, Platform, TextInput } from "react-native";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import React from "react"
-import { MagnifyingGlassIcon } from 'react-native-heroicons/outline'
+import React, { useState } from "react";
+import { ArrowLeftIcon, MagnifyingGlassIcon } from 'react-native-heroicons/outline';
 import Categories from "../components/categories";
 import SortCategories from "../components/sortCategories";
 import Destinations from "../components/destinations";
+import { signOut } from "firebase/auth";
+import { auth, db } from "../../config/firebase";
+import { useNavigation } from "@react-navigation/native";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import SearchRideScreen from "./SearchRideScreen";
 
 
-const ios = Platform.OS=='ios'
 
-const topMargin = ios? 'mt-3': 'mt-10';
+
+
 export default function HomeScreen(){
+	const navigation = useNavigation();
+	// const Drawer = createDrawerNavigator();
+
+	const [source, setSource] = useState("");
+	const [destination, setDestination] = useState("");
+
+
+	// console.log(source);
+
+	const handlePress = () =>{
+		navigation.navigate("ShareRide")
+	}
+	
+
+	const handleLogout = async()=>{
+		await signOut(auth);
+		navigation.navigate("Welcome")
+
+	}
+
+	const handleSubmitSearchRide = async () => {
+
+		navigation.navigate("SearchRide", {source: source, destination:destination});
+		console.log("Going to search rides screen!");
+
+	}
 
 	return(
-		<SafeAreaView className='flex-1 bg-white'>
-			<ScrollView showsVerticalScrollIndicator={false} className={"space-y-6"+topMargin}>
+		<View className = "flex-1  bg-white" style= {{backgroundColor: "blue"}}>
 
-
-				<View className='mx-5 flex-row justify-between items-center mb-10'>
-					<Text style={{fontSize: wp(7)}} className="font-bold text-neutral-700">Let's Discover</Text>
-
-					<TouchableOpacity>
-						<Image source={require('../../assets/images/avatar.png')} style={{height: wp(12), width: wp(12)}} />
+			<SafeAreaView className="flex">
+				<View className="flex-row justify-start">
+	
+					<TouchableOpacity
+						onPress={() => navigation.goBack()}
+						className = "bg-yellow-400 p02 rounded-tr-2xl rounded-bl-2xl ml-4"
+					>
+						<ArrowLeftIcon size="30" color="black" />
 					</TouchableOpacity>
 				</View>
+				{/* <View>
+					insert image
+				</View> */}
+			</SafeAreaView>
+  
+  
+		<View className='flex-1 bg-white px-8 pt-20' style={{borderTopRadius: 20}}>
+
+
+		<Image 
+				source={require("../img/sharewheels.jpg")} 
+			 	style = {{width: 300, height: 200, justifyContent:"center"}}
+			/>
+  
+		  <View className="form space-y-2">
+			  <TextInput 
+				  className="p-4 bg-gray-100 text-gray-700 rounded-2xl"
+				  value={source}
+				  onChangeText={value=>setSource(value)}
+				  placeholder = "From"
+  
+			  />
+  
+			  <TextInput 
+				  className="p-4 bg-gray-100 text-gray-700 rounded-2xl"
+				  value={destination}
+				  onChangeText={value=>setDestination(value)}
+				  placeholder = "To"
+			
+			  />
+  
+  
+ 
+  
+			  <TouchableOpacity
+				  onPress={handleSubmitSearchRide}
+				  className="py-3 bg-yellow-400 rounded-xl"
+			  >
+				  <Text className="font-xl font-bold text-center text-gray-700">
+					  Search where you want to go
+				  </Text>
+				  
+				  
+			  </TouchableOpacity>	
+  
+		  </View>
+  
+		  <Text className="text-xl text-gray-700 font-bold text-center py-5">
+			  OR
+		  </Text>
+  
+		  
+  
+  
+		  	<TouchableOpacity
+				  onPress={handlePress}
+				  className="py-3 bg-yellow-400 rounded-xl"
+			  >
+				  <Text className="font-xl font-bold text-center text-gray-700">
+					  Share your ride 
+				  </Text>
+				  
+				  
+			</TouchableOpacity>	
 
 
 
 
-				{/* Search bar view */}
-
-				<View className="mx-5 mb-4">
-					<View className='flex-row item-center bg-neutral-100 rounded-full p-4 space-x-2 pl-6'>
-						<MagnifyingGlassIcon size={20} strokeWidth={3} color='grey' />
-
-						<TextInput 
-							placeholder="Search Destinations"
-							placeholderTextColor={'grey'}
-							className="flex-1 text-base mb-1 pl-1 tracking-wider"
-						/>
-					</View>
-				</View>
+			<TouchableOpacity
+				  onPress={handlePress}
+				  className="py-3 mt-12 bg-gray-400 rounded-xl"
+			  >
+				  <Text className="font-xl font-bold text-center text-gray-700">
+					  All ride bookings
+				  </Text>
+				  
+				  
+			</TouchableOpacity>	
 
 
-
-
-
-				{/* Categories */}
-				<View className='mb-4'>
-					<Categories />
-				</View>
-
-
-
-				{/* sort Categories */}
-
-				<View className='mb-4'>
-					<SortCategories />
-				</View>
-
-
-				{/* Destinations */}
-
-				<View className='mb-4'>
-					<Destinations />
-				</View>
-
-
-			</ScrollView>
-		</SafeAreaView>
+			<TouchableOpacity
+				  onPress={handleLogout}
+				  className="py-3 mt-12 bg-gray-400 rounded-xl"
+			  >
+				  <Text className="font-xl font-bold text-center text-gray-700">
+					  Logout
+				  </Text>
+				  
+				  
+			</TouchableOpacity>	
+  
+		</View>
+	   </View>
+		
 	)
 }
