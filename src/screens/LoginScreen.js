@@ -37,10 +37,12 @@ export default function LoginScreen() {
 				>
 					<ArrowLeftIcon size="30" color="black" />
 				</TouchableOpacity>
+				<View>
+					<Text className="font-bold text-lg pl-5">Login Screen</Text>
+				</View>
+
 			</View>
-			<View>
-				{/* insert image */}
-			</View>
+			
 	  </SafeAreaView>
 
 

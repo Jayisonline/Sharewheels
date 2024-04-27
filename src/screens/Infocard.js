@@ -16,7 +16,7 @@ export default function Infocard({ user, source, destination, date, time, fare }
 
   return (
   // <View>
-	<TouchableOpacity onPress={handlePress} className="bg-white shadow-md rounded-xl m-2 p-6 pt-4 w-80">
+	<TouchableOpacity onPress={handlePress} className="bg-white shadow-md rounded-xl m-2 p-6 pt-4 w-96">
       <Text className="text-lg font-bold">{user}</Text>
 
       <View className="flex flex-row justify-between">

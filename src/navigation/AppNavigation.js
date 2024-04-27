@@ -26,7 +26,7 @@
 
 
 import {View, Text} from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import HomeScreen from '../Screens/HomeScreen';
@@ -38,13 +38,20 @@ import useAuth from '../../hooks/useAuth';
 // import LoggedInNavigation from './LoggedInNavigation';
 import SearchRideScreen from '../Screens/SearchRideScreen';
 import BookRideScreen from '../Screens/BookRideScreen';
+import MyTabs from './AllRideBookingNavigation';
 
 const Stack = createNativeStackNavigator();
 
 export default function AppNavigation(){
 
+	// const [uid, setUid] = useState("jay");
+
 	const {user} = useAuth();
+	
+
 	if (user){
+
+
 	return (
 		<NavigationContainer>
 			<Stack.Navigator initialRouteName='Home' 
@@ -53,9 +60,11 @@ export default function AppNavigation(){
 
 				
 				<Stack.Screen name="Home" component = {HomeScreen} />
-				<Stack.Screen name="ShareRide" component = {ShareRideScreen} />
+				<Stack.Screen name="AllRideBooking" component={MyTabs} />
+				<Stack.Screen name="ShareRide" component = {ShareRideScreen}  />
 				<Stack.Screen name="SearchRide" component = {SearchRideScreen} />
 				<Stack.Screen name="BookRide" component = {BookRideScreen} />
+				
 				
 
 			</Stack.Navigator>

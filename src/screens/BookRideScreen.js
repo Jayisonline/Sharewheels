@@ -1,18 +1,18 @@
-import { View, Text , Image, Touchable, PermissionsAndroid, Linking} from 'react-native'
+import { View, Text , Image, Touchable, PermissionsAndroid, Linking, SafeAreaView} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { GestureHandlerRootView, ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { collection, doc, getDoc, getDocs, query, setDoc, where } from 'firebase/firestore';
 import useAuth from '../../hooks/useAuth';
 import { db } from '../../config/firebase';
-import { ArrowRightIcon } from 'react-native-heroicons/outline';
+import { ArrowLeftIcon, ArrowRightIcon } from 'react-native-heroicons/outline';
 
 
 
  
 
 export default function BookRideScreen({route}) {
-	
+	const navigation = useNavigation();
 
 	
 
@@ -31,11 +31,16 @@ export default function BookRideScreen({route}) {
 
 	const [location, setLocation] = useState(false);
 	const [content, setContent] = useState("Book Ride");
+	const [style, setStyle] = useState("font-semibold text-red-500");
+
+
+	const [s, setS] = useState("");
+	const [d, setD] = useState("");
 
 
 	const driverId = route.params.DriverId;
-	const s = route.params.source;
-	const d = route.params.destination;
+	// const s = route.params.source;
+	// const d = route.params.destination;
 
 
 
@@ -45,6 +50,12 @@ export default function BookRideScreen({route}) {
 	const setUID = async () => {
 		setPassId(data?.user?.uid);
 	};
+
+	const reloadStyle = () => {
+		setTimeout(() => {
+			setStyle("font-semibold text-gren-500");
+		}, 5000);
+	} 
 
 	
 
@@ -58,18 +69,31 @@ export default function BookRideScreen({route}) {
 
 
 
-
+	// const reload = () => {
+		
+	// }
 
 
 
 	const onStart = async () => {
 
-		
+
+
 		try {
 			// getLocation();
 
 			setUID();
+
+			// reloadStyle();
 			
+
+			// if (passId === undefined){
+			// 	// reload();
+			// 	setTimeout(0, ()=>{setReady("Ready!")});
+			// 	setTimeout(1000, ()=>{setReady("Not Ready!")});
+			// }
+			
+
 			// Driver's information
 			const q1 = doc(db, "users", driverId);
 			const snapShot = await getDoc(q1);
@@ -89,6 +113,8 @@ export default function BookRideScreen({route}) {
 			setDate(d2.date);
 			setTime(d2.time);
 			setSeats(d2.seats);
+			setS(d2.source);
+			setD(d2.destination);
 
 
 
@@ -117,7 +143,7 @@ export default function BookRideScreen({route}) {
 			setPassPhno(d3.phoneno);
 			setPassEmail(d3.email);
 
-			console.log("passId: "+ passId);
+			// console.log(passId+ " "+ passName+ ' '+ passEmail+ ' ' + passPhno);
 			
 
 
@@ -137,6 +163,8 @@ export default function BookRideScreen({route}) {
 				time: time,
 				fare: fare, 
 				seatsgrabbed: seats,
+				source:s,
+				destination: d
 
 			}
 			await setDoc(doc(db, "BookedRides", bookingId), docData);
@@ -166,29 +194,57 @@ export default function BookRideScreen({route}) {
   return (
 
 	<GestureHandlerRootView>
-		<ScrollView>
+		
 	<View className="justify-between">
-	  <Text>BookRideScreen</Text>
+	  
+	<View className="flex-row justify-between pt-100 font-extrabold text-2x" style={{backgroundColor: "white"}}>
+
+		<SafeAreaView className="flex">
+
+				<View className="flex-row justify-start mt-10 pb-2">
+
+					<TouchableOpacity
+						onPress={() => navigation.goBack()}
+						className = "bg-yellow-400 p02 rounded-tr-2xl rounded-bl-2xl ml-4"
+					>
+						<ArrowLeftIcon size="30" color="black" font="bold"/>
+					</TouchableOpacity>
+
+					<Text className="ml-10 text-xl font-bold">Driver's Information</Text>
+				</View>
+				{/* <View className="flex-row justify-between w-96 ml-4">
+					<Text className="text-xl font-bold">Form: {s}</Text>
+						<ArrowRightIcon size="20" color="black"/>
+					<Text className="text-xl font-bold">To: {d}</Text>
+				</View> */}
+			</SafeAreaView>
+
+			
+		</View>
+		<ScrollView>
+
+			{/* <View style={newColoe()} >Hello</View> */}
 
 	  <Image source={require("../img/man.jpg")}
 	  style={{width:300, height:300, }} 
 	  className="rounded-full ml-10 mt-10"
 	  />
 
-		<View className="flex-row flex justify-between mt-10 p-6 font-bold text-lg">
-			<Text>Source: {s}</Text>
-			<Text>Destination: {d}</Text>
+		<View className="flex-row flex justify-between mt-10 p-6 ">
+			<Text className="font-bold text-lg">Source: {s}</Text>
+			<Text className="font-bold text-lg">Destination: {d}</Text>
 		</View>
 
 		<View className="flex-col justify-between ml-20">
-			<Text>Driver's Name: {driverName}</Text>
-			<Text>User ID: {driverId}</Text>
-			<Text>Email: {driverEmail}</Text>
-			<Text>Phone No.: {driverPhno}</Text>
-			<Text>Available Seats: {seats}</Text>
-			<Text>Date of Journey: {date}</Text>
-			<Text>Time of Journey: {time}</Text>
-			<Text>Fare per Person: {fare}Rs/-</Text>
+			<Text className="font-semibold">Driver's Name: {driverName}</Text>
+			<Text className="font-semibold">User ID: {driverId}</Text>
+			<Text className="font-semibold">Email: {driverEmail}</Text>
+			<Text className="font-semibold">Phone No.: {driverPhno}</Text>
+			<Text className="font-semibold">Available Seats: {seats}</Text>
+			<Text className="font-semibold">Date of Journey: {date}</Text>
+			<Text className="font-semibold">Time of Journey: {time}</Text>
+			<Text className="font-semibold">Fare per Person: {fare}Rs/-</Text>
+			{/* <Text className={style}>Ready!</Text> */}
 		</View>
 
 
@@ -203,14 +259,14 @@ export default function BookRideScreen({route}) {
 	  <TouchableOpacity  
 
 	  	onPress={handlePress}
-	  	className="w-80 h-10 bg-green-600 justify-center flex-row rounded-lg mt-10 ml-10"
+	  	className="w-80 h-10 bg-green-600 justify-center flex-row rounded-lg mt-10 ml-10 mb-80"
 	  >
-		<Text className="pt-1 font-extrabold text-2xl text-white border-blue-950">{content}</Text>
+		<Text className="pt-1 font-extrabold text-2xl text-white border-blue-950">Book Ride</Text>
 	  </TouchableOpacity>
 
-
+	  </ScrollView>
 	</View>
-	</ScrollView>
+	
 	</GestureHandlerRootView>
   )
 }

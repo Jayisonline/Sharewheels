@@ -68,10 +68,10 @@ export default function WelcomeScreen() {
 				Let's get Started!
 			</Text>
 
-		{/* </View> */}
+		
 
 				<View>
-					{/* insert image */}
+					{/* <Image source={require("../img/Car + Pin.jpeg")} /> */}
 				</View>
 
 

@@ -15,12 +15,15 @@ import SearchRideScreen from "./SearchRideScreen";
 
 
 
-export default function HomeScreen(){
+export default function HomeScreen({route}){
 	const navigation = useNavigation();
 	// const Drawer = createDrawerNavigator();
 
 	const [source, setSource] = useState("");
 	const [destination, setDestination] = useState("");
+
+
+	// console.log(route.params.uid);
 
 
 	// console.log(source);
@@ -43,32 +46,43 @@ export default function HomeScreen(){
 
 	}
 
+	const handleAllRideBookings = async () => {
+		navigation.navigate("AllRideBooking");
+		console.log("Going to All Rides Booking!");
+	}
+
+
 	return(
 		<View className = "flex-1  bg-white" style= {{backgroundColor: "blue"}}>
 
 			<SafeAreaView className="flex">
-				<View className="flex-row justify-start">
+				<View className="flex-row justify-start mt-8 pb-3">
 	
 					<TouchableOpacity
 						onPress={() => navigation.goBack()}
 						className = "bg-yellow-400 p02 rounded-tr-2xl rounded-bl-2xl ml-4"
 					>
-						<ArrowLeftIcon size="30" color="black" />
+						{/* <ArrowLeftIcon size="30" color="white" font="bold"/> */}
 					</TouchableOpacity>
+
+					<Text className="ml-10 text-xl text-white font-bold">Home Screen</Text>
 				</View>
 				{/* <View>
 					insert image
 				</View> */}
 			</SafeAreaView>
   
-  
+			<ScrollView>
 		<View className='flex-1 bg-white px-8 pt-20' style={{borderTopRadius: 20}}>
 
-
+				<View className="mt-6">
 		<Image 
 				source={require("../img/sharewheels.jpg")} 
 			 	style = {{width: 300, height: 200, justifyContent:"center"}}
+				// className="mt-3"
 			/>
+
+</View>
   
 		  <View className="form space-y-2">
 			  <TextInput 
@@ -125,7 +139,7 @@ export default function HomeScreen(){
 
 
 			<TouchableOpacity
-				  onPress={handlePress}
+				  onPress={handleAllRideBookings}
 				  className="py-3 mt-12 bg-gray-400 rounded-xl"
 			  >
 				  <Text className="font-xl font-bold text-center text-gray-700">
@@ -138,7 +152,7 @@ export default function HomeScreen(){
 
 			<TouchableOpacity
 				  onPress={handleLogout}
-				  className="py-3 mt-12 bg-gray-400 rounded-xl"
+				  className="py-3 mt-12 bg-gray-400 rounded-xl mb-32"
 			  >
 				  <Text className="font-xl font-bold text-center text-gray-700">
 					  Logout
@@ -148,6 +162,8 @@ export default function HomeScreen(){
 			</TouchableOpacity>	
   
 		</View>
+
+		</ScrollView>
 	   </View>
 		
 	)

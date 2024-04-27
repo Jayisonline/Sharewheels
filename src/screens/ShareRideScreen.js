@@ -6,11 +6,15 @@ import { Button } from 'react-native-paper';
 import firebase from 'firebase/compat/app';
 import useAuth from '../../hooks/useAuth';
 import { db } from '../../config/firebase';
+import { ArrowLeftIcon } from 'react-native-heroicons/solid';
+import { useNavigation } from '@react-navigation/native';
 
 
 export default function ShareRideScreen() {
 	// const [date, setDate] = useState(new Date())
-  	const [open, setOpen] = useState(false)
+
+	const navigation = useNavigation();
+	const [open, setOpen] = useState(false)
 
 	const [source, setSource] = useState("");
 	const [destination, setDestination] = useState("");
@@ -62,6 +66,24 @@ export default function ShareRideScreen() {
 
   return (
 	<ScrollView>
+		<SafeAreaView className="flex">
+			<View className="flex-row justify-start mt-10">
+
+				<TouchableOpacity
+					onPress={() => navigation.goBack()}
+					className = "bg-yellow-400 p02 rounded-tr-2xl rounded-bl-2xl ml-4"
+				>
+					<ArrowLeftIcon size="30" color="black" />
+				</TouchableOpacity>
+				<View>
+					<Text className="font-bold text-lg pl-5">Share Your Ride</Text>
+				</View>
+			</View>
+			<View>
+				{/* insert image */}
+			</View>
+	  </SafeAreaView>
+
 
 		<View className='flex-1 px-8 pt-8 bg-white' style={{borderTopRadius: 50, borderTopRightRadius: 50}}>
 
