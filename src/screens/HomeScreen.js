@@ -53,9 +53,9 @@ export default function HomeScreen({route}){
 
 
 	return(
-		<View className = "flex-1  bg-white" style= {{backgroundColor: "blue"}}>
+		<View className = "flex-1  bg-white" style= {{backgroundColor: "#540C97"}}>
 
-			<SafeAreaView className="flex">
+			<View className="flex">
 				<View className="flex-row justify-start mt-8 pb-3">
 	
 					<TouchableOpacity
@@ -70,17 +70,20 @@ export default function HomeScreen({route}){
 				{/* <View>
 					insert image
 				</View> */}
-			</SafeAreaView>
+			</View>
   
-			<ScrollView>
-		<View className='flex-1 bg-white px-8 pt-20' style={{borderTopRadius: 20}}>
+			<ScrollView className="">
+		<View className='flex-1 bg-white px-8 rounded-3xl' style={{borderTopRadius: 20}}>
+			
 
-				<View className="mt-6">
+				<View className="mt-0">
+				
 		<Image 
-				source={require("../img/sharewheels.jpg")} 
-			 	style = {{width: 300, height: 200, justifyContent:"center"}}
-				// className="mt-3"
+				source={require("../img/img3.png")} 
+			 	style = {{width: 350, height: 250, justifyContent:"center"}}
+				className="rounded-3xl mt-2"
 			/>
+			<Text className="font-bold text-lg ml-24 mt-2 mb-2" style={{color:"#540C97"}}>Let's Book a Ride!</Text>
 
 </View>
   
@@ -140,7 +143,7 @@ export default function HomeScreen({route}){
 
 			<TouchableOpacity
 				  onPress={handleAllRideBookings}
-				  className="py-3 mt-12 bg-gray-400 rounded-xl"
+				  className="py-3 mt-12 bg-yellow-400 rounded-xl"
 			  >
 				  <Text className="font-xl font-bold text-center text-gray-700">
 					  All ride bookings

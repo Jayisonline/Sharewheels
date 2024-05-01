@@ -26,9 +26,9 @@ export default function LoginScreen() {
   return (
 
 
-	<View className = "flex-1  bg-white" style= {{backgroundColor: "yellow"}}>
+	<View className = "flex-1  bg-indigo-400" style={{backgroundColor: "#540C97"}}>
 	  
-	  <SafeAreaView className="flex">
+	  <SafeAreaView className="flex mb-3">
 			<View className="flex-row justify-start">
 
 				<TouchableOpacity
@@ -38,7 +38,7 @@ export default function LoginScreen() {
 					<ArrowLeftIcon size="30" color="black" />
 				</TouchableOpacity>
 				<View>
-					<Text className="font-bold text-lg pl-5">Login Screen</Text>
+					<Text className="font-bold text-white text-lg pl-5">Login Screen</Text>
 				</View>
 
 			</View>
@@ -52,6 +52,7 @@ export default function LoginScreen() {
 			<Text className="text-gray-700 ml-4">Email Address</Text>
 			<TextInput 
 				className="p-4 bg-gray-100 text-gray-700 rounded-2xl"
+				// style={{backgroundColor: "#CDCDCD"}}
 				value={email}
 				onChangeText={value=>setEmail(value)}
 				placeholder = "Enter Email"

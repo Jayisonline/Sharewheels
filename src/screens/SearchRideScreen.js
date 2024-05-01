@@ -100,7 +100,7 @@ export default function SearchRideScreen({route}) {
 			
 		</View>
 
-	 <ScrollView className="h-full bg-indigo-500">
+	 <ScrollView className="h-full" style={{backgroundColor:"#540C97"}}>
 
 
 		
@@ -114,12 +114,12 @@ export default function SearchRideScreen({route}) {
 			})
 			}
 
-			{/* <Infocard />
 			<Infocard />
 			<Infocard />
 			<Infocard />
 			<Infocard />
-			<Infocard /> */}
+			<Infocard />
+			<Infocard />
 
 
 		</View>

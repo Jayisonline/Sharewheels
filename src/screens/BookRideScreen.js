@@ -132,8 +132,6 @@ export default function BookRideScreen({route}) {
 		
 		try{
 
-			
-
 			//passengers info
 			const q3 = doc(db, "users", passId);
 			const snapShot3 = await getDoc(q3);
@@ -145,7 +143,6 @@ export default function BookRideScreen({route}) {
 
 			// console.log(passId+ " "+ passName+ ' '+ passEmail+ ' ' + passPhno);
 			
-
 
 			const bookingId = passId+driverId;
 			//data for pushing in BookedRides
@@ -226,8 +223,9 @@ export default function BookRideScreen({route}) {
 			{/* <View style={newColoe()} >Hello</View> */}
 
 	  <Image source={require("../img/man.jpg")}
-	  style={{width:300, height:300, }} 
-	  className="rounded-full ml-10 mt-10"
+	  style={{width:300, height:300, borderWidth: 4, borderColor: "black"}} 
+	  className="rounded-full ml-10 mt-10 border-s-black"
+
 	  />
 
 		<View className="flex-row flex justify-between mt-10 p-6 ">
@@ -251,17 +249,17 @@ export default function BookRideScreen({route}) {
 		<TouchableOpacity  
 
 	  	onPress={()=> {Linking.openURL("https://www.google.com/maps/@21.0474049,79.0091255,10.88z")}}
-	  	className="w-80 h-10 bg-green-600 justify-center flex-row rounded-lg mt-10 ml-10"
+	  	className="w-80 h-12 bg-yellow-400 justify-center flex-row rounded-lg mt-10 ml-10"
 	  >
-		<Text className="pt-1 font-extrabold text-2xl text-white border-blue-950">Get Location of Driver</Text>
+		<Text className="pt-1 font-extrabold text-2xl text-black border-blue-950">Get Location of Driver</Text>
 	  </TouchableOpacity>
 
 	  <TouchableOpacity  
 
 	  	onPress={handlePress}
-	  	className="w-80 h-10 bg-green-600 justify-center flex-row rounded-lg mt-10 ml-10 mb-80"
+	  	className="w-80 h-12 bg-yellow-400 justify-center flex-row rounded-lg mt-10 ml-10 mb-80"
 	  >
-		<Text className="pt-1 font-extrabold text-2xl text-white border-blue-950">Book Ride</Text>
+		<Text className="pt-1 font-extrabold text-2xl text-black border-blue-950">Book Ride</Text>
 	  </TouchableOpacity>
 
 	  </ScrollView>
