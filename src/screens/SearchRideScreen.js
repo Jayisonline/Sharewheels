@@ -8,6 +8,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from 'react-native-heroicons/outline';
 import { and, collection, getDocs, query, where, getDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { useNavigation } from '@react-navigation/native';
+import { responsiveWidth } from 'react-native-responsive-dimensions';
 
 
 
@@ -88,25 +89,25 @@ export default function SearchRideScreen({route}) {
 						<ArrowLeftIcon size="30" color="black" font="bold"/>
 					</TouchableOpacity>
 
-					<Text className="ml-10 text-xl font-bold">Available Rides</Text>
+					<Text className="ml-10 text-xl font-bold ">Available Rides</Text>
 				</View>
-				<View className="flex-row justify-between w-96 ml-4">
+				<View className="flex-row justify-between ml-4" style={{width: responsiveWidth(92)}}>
 					<Text className="text-xl font-bold">Form: {s}</Text>
 						<ArrowRightIcon size="20" color="black"/>
-					<Text className="text-xl font-bold">To: {d}</Text>
+					<Text className="text-xl font-bold ">To: {d}</Text>
 				</View>
 			</SafeAreaView>
 
 			
 		</View>
 
-	 <ScrollView className="h-full" style={{backgroundColor:"#540C97"}}>
+	 <ScrollView className="pt-2" style={{backgroundColor:"#540C97"}}>
 
 
 		
 
 		
-		<View className="pl-2 mt-2">
+		<View className="pl-2 mb-20 ">
 
 			{info.map((i) => {
 				// console.log(i.uid);
@@ -114,12 +115,12 @@ export default function SearchRideScreen({route}) {
 			})
 			}
 
+			{/* <Infocard />
 			<Infocard />
 			<Infocard />
 			<Infocard />
 			<Infocard />
-			<Infocard />
-			<Infocard />
+			<Infocard /> */}
 
 
 		</View>

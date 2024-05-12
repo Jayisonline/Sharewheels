@@ -1,17 +1,16 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import DriverScreen from '../Screens/DriverScreen';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import AcceptedReqScreen from '../Screens/AcceptedReqScreen';
+import RideReqScreen from '../Screens/RideReqScreen';
 
-import PassengerScreen from '../Screens/PassengerScreen'
-
-const Tab = createMaterialBottomTabNavigator();
+const Tab = createMaterialTopTabNavigator();
 
 export default function MyTabs() {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="PassangerScreen" component={PassengerScreen} />
-      <Tab.Screen name="DriverScreen" component={DriverScreen} />
+      <Tab.Screen name="RideReq" component={RideReqScreen} />
+      <Tab.Screen name="AcceptedReq" component={AcceptedReqScreen} />
     </Tab.Navigator>
   );
 }

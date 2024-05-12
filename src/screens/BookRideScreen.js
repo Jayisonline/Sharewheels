@@ -1,4 +1,4 @@
-import { View, Text , Image, Touchable, PermissionsAndroid, Linking, SafeAreaView} from 'react-native'
+import { View, Text , Image, Touchable, PermissionsAndroid, Linking, SafeAreaView, Button} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { GestureHandlerRootView, ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
@@ -6,7 +6,11 @@ import { collection, doc, getDoc, getDocs, query, setDoc, where } from 'firebase
 import useAuth from '../../hooks/useAuth';
 import { db } from '../../config/firebase';
 import { ArrowLeftIcon, ArrowRightIcon } from 'react-native-heroicons/outline';
-
+import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
+import MapView from 'react-native-maps';
+import * as Location from 'expo-location';
+import Modal from "react-native-modal";
+// import { Button } from 'react-native-paper';
 
 
  
@@ -29,9 +33,21 @@ export default function BookRideScreen({route}) {
 	const [passName, setPassName] = useState("");
 	const [passId, setPassId] = useState("");
 
-	const [location, setLocation] = useState(false);
+	const [isModalVisible, setModalVisible] = useState(false);
+
+	const toggleModal = () => {
+		setModalVisible(!isModalVisible);
+	};
+
+
 	const [content, setContent] = useState("Book Ride");
 	const [style, setStyle] = useState("font-semibold text-red-500");
+
+
+	const [dLat, setDLat] = useState();
+	const [dLong, setDLong] = useState();
+	const [pLat, setPLat] = useState();
+	const [pLong, setPLong] = useState(); 
 
 
 	const [s, setS] = useState("");
@@ -115,6 +131,8 @@ export default function BookRideScreen({route}) {
 			setSeats(d2.seats);
 			setS(d2.source);
 			setD(d2.destination);
+			setDLat(d2.dlat);
+			setDLong(d2.dlong);
 
 
 
@@ -126,11 +144,65 @@ export default function BookRideScreen({route}) {
 	// onStart();
 
 
+
+
+
+
+	useEffect(()=>{
+		requestLocPermission();
+	}, []);
+
+	const requestLocPermission = async () => {
+		try {
+		  const granted = await PermissionsAndroid.request(
+			PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+			{
+			  title: 'Location Access',
+			  message:'',
+			  buttonNeutral: 'Ask Me Later',
+			  buttonNegative: 'Cancel',
+			  buttonPositive: 'OK',
+			},
+		  );
+		  if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+			console.log('You can use the Location');
+		  } else {
+			console.log('Location permission denied');
+		  }
+		} catch (err) {
+		  console.warn(err);
+		}
+	};
+
+
+	const [location, setLocation] = useState(null);
+	const [errorMsg, setErrorMsg] = useState(null);
+  
+	useEffect(() => {
+	  
+		(async () => {
+		
+		let location = await Location.getCurrentPositionAsync({});
+		setLocation(location);
+		console.log(location);
+	  })();
+
+	}, []);
+
+
+
+
+
 	const handlePress = async () => {
 
 
 		
 		try{
+
+			const loc = location;
+			console.log(loc.coords.latitude);
+			setPLat(loc.coords.latitude);
+			setPLong(loc.coords.longitude);
 
 			//passengers info
 			const q3 = doc(db, "users", passId);
@@ -161,14 +233,17 @@ export default function BookRideScreen({route}) {
 				fare: fare, 
 				seatsgrabbed: seats,
 				source:s,
-				destination: d
+				destination: d, 
+				dlat: dLat, 
+				dlong: dLong, 
+				plat: pLat,
+				plong: pLong,
 
 			}
 			await setDoc(doc(db, "BookedRides", bookingId), docData);
 			console.log("Ride Booked Sucessfully!");
 			// setContent("Booked!");
 
-			Linking.openURL("https://www.google.com/maps/@21.0474049,79.0091255,10.88z");
 
 
 
@@ -176,6 +251,8 @@ export default function BookRideScreen({route}) {
 			console.log("error2: "+e);
 		}
 	}
+
+	
 
 
 	// onStart();
@@ -192,9 +269,9 @@ export default function BookRideScreen({route}) {
 
 	<GestureHandlerRootView>
 		
-	<View className="justify-between">
+	<View className="">
 	  
-	<View className="flex-row justify-between pt-100 font-extrabold text-2x" style={{backgroundColor: "white"}}>
+	<View className="flex-row justify-between pt-100 font-extrabold text-2x" style={{backgroundColor: "#540C97"}}>
 
 		<SafeAreaView className="flex">
 
@@ -207,7 +284,7 @@ export default function BookRideScreen({route}) {
 						<ArrowLeftIcon size="30" color="black" font="bold"/>
 					</TouchableOpacity>
 
-					<Text className="ml-10 text-xl font-bold">Driver's Information</Text>
+					<Text className="ml-10 text-xl font-bold text-white">Driver's Information</Text>
 				</View>
 				{/* <View className="flex-row justify-between w-96 ml-4">
 					<Text className="text-xl font-bold">Form: {s}</Text>
@@ -218,22 +295,23 @@ export default function BookRideScreen({route}) {
 
 			
 		</View>
-		<ScrollView>
+		<ScrollView >
+			<View className="flex items-center justify-center">
 
 			{/* <View style={newColoe()} >Hello</View> */}
 
-	  <Image source={require("../img/man.jpg")}
-	  style={{width:300, height:300, borderWidth: 4, borderColor: "black"}} 
-	  className="rounded-full ml-10 mt-10 border-s-black"
+	  <Image source={require("../img/woman.jpg")}
+	  style={{width:responsiveWidth(70), height:responsiveWidth(70), borderWidth: 4, borderColor: "black"}} 
+	  className="rounded-full mt-10 border-s-black"
 
 	  />
 
-		<View className="flex-row flex justify-between mt-10 p-6 ">
+		<View className="flex flex-row justify-between mt-10 p-6 gap-8">
 			<Text className="font-bold text-lg">Source: {s}</Text>
 			<Text className="font-bold text-lg">Destination: {d}</Text>
 		</View>
 
-		<View className="flex-col justify-between ml-20">
+		<View className="flex-col justify-between">
 			<Text className="font-semibold">Driver's Name: {driverName}</Text>
 			<Text className="font-semibold">User ID: {driverId}</Text>
 			<Text className="font-semibold">Email: {driverEmail}</Text>
@@ -248,20 +326,35 @@ export default function BookRideScreen({route}) {
 
 		<TouchableOpacity  
 
-	  	onPress={()=> {Linking.openURL("https://www.google.com/maps/@21.0474049,79.0091255,10.88z")}}
-	  	className="w-80 h-12 bg-yellow-400 justify-center flex-row rounded-lg mt-10 ml-10"
+	  	onPress={()=> {navigation.navigate("MapScreen", {longitude: {dLong}, latitude: {dLat}})}}
+	  	className="w-80 h-12 bg-yellow-400 justify-center flex-row rounded-lg mt-10"
 	  >
 		<Text className="pt-1 font-extrabold text-2xl text-black border-blue-950">Get Location of Driver</Text>
 	  </TouchableOpacity>
 
+	  
+	  
+
 	  <TouchableOpacity  
 
 	  	onPress={handlePress}
-	  	className="w-80 h-12 bg-yellow-400 justify-center flex-row rounded-lg mt-10 ml-10 mb-80"
+	  	className="w-80 h-12 bg-yellow-400 justify-center flex-row rounded-lg mt-10 mb-64"
 	  >
 		<Text className="pt-1 font-extrabold text-2xl text-black border-blue-950">Book Ride</Text>
 	  </TouchableOpacity>
 
+
+
+	  {/* <Modal isVisible={false} className="w-22 h-36">
+        <View style={{ flex: 1 }}>
+          <Text>Hello!</Text>
+
+          <Button title="Hide modal" onPress={toggleModal} />
+        </View>
+      </Modal> */}
+			
+
+	  </View>	
 	  </ScrollView>
 	</View>
 	

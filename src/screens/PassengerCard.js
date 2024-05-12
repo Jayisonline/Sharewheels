@@ -10,7 +10,6 @@ export default function PassengerCard({BookingId, source, destination, driverNam
 	<View>
 		<View className="bg-white w-80 flex justify-center align-middle mt-6 mb-2 p-2 rounded-lg">  
 
-
 		<View className="flex flex-row justify-between">
 			<Text className="font-bold text-lg">
 				From: {source}

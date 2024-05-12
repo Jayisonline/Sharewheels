@@ -1,5 +1,5 @@
-import { View, Text, TextInput, TouchableOpacity, SafeAreaView, ScrollViewComponent, ScrollView } from 'react-native'
-import React, { useState } from 'react'
+import { View, Text, TextInput, TouchableOpacity, SafeAreaView, ScrollViewComponent, ScrollView, PermissionsAndroid } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { doc, setDoc } from "firebase/firestore"; 
 import DatePicker from 'react-native-date-picker'
 import { Button } from 'react-native-paper';
@@ -8,6 +8,10 @@ import useAuth from '../../hooks/useAuth';
 import { db } from '../../config/firebase';
 import { ArrowLeftIcon } from 'react-native-heroicons/solid';
 import { useNavigation } from '@react-navigation/native';
+import { responsiveScreenHeight } from 'react-native-responsive-dimensions';
+import Geolocation from 'react-native-geolocation-service';
+// import Geolocation from '@react-native-community/geolocation';
+import * as Location from 'expo-location';
 
 
 export default function ShareRideScreen() {
@@ -25,7 +29,6 @@ export default function ShareRideScreen() {
 	// const [message, setMessage] = useState("");
 
 	
-	
 	const user = useAuth();
 
 	// console.log(source);
@@ -35,10 +38,61 @@ export default function ShareRideScreen() {
 	// console.log(seats);
 	// console.log(fare);
 
+	useEffect(()=>{
+		requestLocPermission();
+	}, []);
+
+	const requestLocPermission = async () => {
+		try {
+		  const granted = await PermissionsAndroid.request(
+			PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+			{
+			  title: 'Location Access',
+			  message:'',
+			  buttonNeutral: 'Ask Me Later',
+			  buttonNegative: 'Cancel',
+			  buttonPositive: 'OK',
+			},
+		  );
+		  if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+			console.log('You can use the Location');
+		  } else {
+			console.log('Location permission denied');
+		  }
+		} catch (err) {
+		  console.warn(err);
+		}
+	};
+
+
+	const [location, setLocation] = useState(null);
+	const [errorMsg, setErrorMsg] = useState(null);
+  
+	useEffect(() => {
+	  
+		(async () => {
+		
+		
+  
+		let location = await Location.getCurrentPositionAsync({});
+		setLocation(location);
+	  })();
+
+	}, []);
+
+
+	// Geolocation.setRNConfiguration(config);
+
+
 	const handleSubmit = async (e) =>{
 		// e.persist();
 
 		try{
+
+			console.log(location);
+			const loc = location;
+			// console.log(loc.coords.latitude);
+			
 			
 			const data = user;
 			console.log(data.user.uid);
@@ -50,7 +104,9 @@ export default function ShareRideScreen() {
 				seats: seats,
 				fare: fare,
 				date: date,
-				time: time
+				time: time,
+				dlat: loc.coords.latitude,
+				dlong: loc.coords.longitude,
 			}
 
 			await setDoc(doc(db, "ShareRide", data.user.uid), docData);
@@ -67,7 +123,7 @@ export default function ShareRideScreen() {
   return (
 	<ScrollView>
 		<SafeAreaView className="flex">
-			<View className="flex-row justify-start mt-10">
+			<View className="flex-row justify-start pt-10 pb-2" style={{backgroundColor: "#540C97"}}>
 
 				<TouchableOpacity
 					onPress={() => navigation.goBack()}
@@ -76,7 +132,7 @@ export default function ShareRideScreen() {
 					<ArrowLeftIcon size="30" color="black" />
 				</TouchableOpacity>
 				<View>
-					<Text className="font-bold text-lg pl-5">Share Your Ride</Text>
+					<Text className="font-bold text-lg pl-5 text-white">Share Your Ride</Text>
 				</View>
 			</View>
 			<View>
@@ -85,7 +141,7 @@ export default function ShareRideScreen() {
 	  </SafeAreaView>
 
 
-		<View className='flex-1 px-8 pt-8 bg-white' style={{borderTopRadius: 50, borderTopRightRadius: 50}}>
+		<View className='flex-1 px-8 pt-8 bg-white' style={{borderTopRadius: 50, borderTopRightRadius: 50, height: responsiveScreenHeight(86)}}>
 
 			<View className="form space-y-2 ">
 				<Text className="text-gray-700 ml-4">Source</Text>

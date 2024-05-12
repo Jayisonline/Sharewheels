@@ -39,8 +39,13 @@ import useAuth from '../../hooks/useAuth';
 import SearchRideScreen from '../Screens/SearchRideScreen';
 import BookRideScreen from '../Screens/BookRideScreen';
 import MyTabs from './AllRideBookingNavigation';
+import MapScreen from '../Screens/MapScreen';
 
 const Stack = createNativeStackNavigator();
+
+
+
+
 
 export default function AppNavigation(){
 
@@ -64,6 +69,7 @@ export default function AppNavigation(){
 				<Stack.Screen name="ShareRide" component = {ShareRideScreen}  />
 				<Stack.Screen name="SearchRide" component = {SearchRideScreen} />
 				<Stack.Screen name="BookRide" component = {BookRideScreen} />
+				<Stack.Screen name="MapScreen" component={MapScreen} />
 				
 				
 

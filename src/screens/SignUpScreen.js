@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, TextInput } from 'react-native'
+import { View, Text, TouchableOpacity, TextInput,ScrollView } from 'react-native'
 import React from 'react'
 import { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -12,7 +12,7 @@ import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/
 import {doc, setDoc} from "firebase/firestore"
 import { collection, addDoc } from "firebase/firestore"; 
 import { RadioButton } from 'react-native-paper';
-import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler'
+// import {   } from 'react-native-gesture-handler'
 
 
 
@@ -68,10 +68,10 @@ export default function SignUpScreen() {
 
 	// <GestureHandlerRootView>
 
-	<View className = "flex-1  bg-white" style= {{backgroundColor: "yellow"}}>
+	<View className = "flex-1  bg-white" style= {{backgroundColor: "#540C97"}}>
 	  
 	  <SafeAreaView className="flex">
-			<View className="flex-row justify-start">
+			<View className="flex-row justify-start mb-2 mt-2">
 
 				<TouchableOpacity
 					onPress={() => navigation.goBack()}
@@ -80,7 +80,7 @@ export default function SignUpScreen() {
 					<ArrowLeftIcon size="30" color="black" />
 				</TouchableOpacity>
 				<View>
-					<Text className="font-bold text-lg pl-5">Signup Screen</Text>
+					<Text className="font-bold text-lg pl-5 text-white ">Signup Screen</Text>
 				</View>
 			</View>
 			<View>
@@ -199,6 +199,6 @@ export default function SignUpScreen() {
 	  </View>
 	 </View>
 
-	//  </GestureHandlerRootView>
+	// </GestureHandlerRootView>
   )
 }

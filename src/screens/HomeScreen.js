@@ -10,6 +10,7 @@ import { auth, db } from "../../config/firebase";
 import { useNavigation } from "@react-navigation/native";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import SearchRideScreen from "./SearchRideScreen";
+import { responsiveHeight, responsiveWidth } from "react-native-responsive-dimensions";
 
 
 
@@ -21,6 +22,8 @@ export default function HomeScreen({route}){
 
 	const [source, setSource] = useState("");
 	const [destination, setDestination] = useState("");
+
+	
 
 
 	// console.log(route.params.uid);
@@ -80,10 +83,13 @@ export default function HomeScreen({route}){
 				
 		<Image 
 				source={require("../img/img3.png")} 
-			 	style = {{width: 350, height: 250, justifyContent:"center"}}
+			 	style = {{width: responsiveWidth(85), height: responsiveHeight(30), justifyContent:"center"}}
 				className="rounded-3xl mt-2"
 			/>
-			<Text className="font-bold text-lg ml-24 mt-2 mb-2" style={{color:"#540C97"}}>Let's Book a Ride!</Text>
+			<View className="flex items-center justify-center">
+			<Text className="font-bold text-lg mt-2 mb-2" style={{color:"#540C97"}}>Let's Book a Ride!</Text>
+			</View>
+			
 
 </View>
   
