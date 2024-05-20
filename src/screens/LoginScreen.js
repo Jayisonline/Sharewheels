@@ -11,12 +11,14 @@ export default function LoginScreen() {
 
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState('');
+	const [error, setError] = useState("");
 
 	const handleSubmit = async ()=> {
 		if (email && password){
 			try{
 				await signInWithEmailAndPassword(auth, email, password);
 			}catch(err){
+				setError(err.message);
 				console.log("got error: ", err.message)
 			}
 		}
@@ -73,6 +75,14 @@ export default function LoginScreen() {
 				<Text className="text-gray-700">Forgot password?</Text>
 			</TouchableOpacity>
 
+			{
+				(error!="") ?(
+					<Text className="text-red-500 items-center">{error}</Text>
+
+				):(
+					<Text className="text-red-500"></Text>
+				)
+			}
 
 			<TouchableOpacity
 				onPress={handleSubmit}

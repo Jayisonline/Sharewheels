@@ -1,4 +1,5 @@
 import AppNavigation from './src/navigation/AppNavigation'
+import { registerRootComponent } from 'expo';
 
 export default function App() {
   return (
@@ -7,3 +8,4 @@ export default function App() {
 }
 
 
+registerRootComponent(App);

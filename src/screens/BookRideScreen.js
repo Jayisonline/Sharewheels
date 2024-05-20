@@ -144,47 +144,50 @@ export default function BookRideScreen({route}) {
 	// onStart();
 
 
-
-
-
-
-	useEffect(()=>{
-		requestLocPermission();
-	}, []);
-
-	const requestLocPermission = async () => {
-		try {
-		  const granted = await PermissionsAndroid.request(
-			PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-			{
-			  title: 'Location Access',
-			  message:'',
-			  buttonNeutral: 'Ask Me Later',
-			  buttonNegative: 'Cancel',
-			  buttonPositive: 'OK',
-			},
-		  );
-		  if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-			console.log('You can use the Location');
-		  } else {
-			console.log('Location permission denied');
-		  }
-		} catch (err) {
-		  console.warn(err);
-		}
-	};
-
-
 	const [location, setLocation] = useState(null);
-	const [errorMsg, setErrorMsg] = useState(null);
+
+
+
+	// useEffect(()=>{
+	// 	requestLocPermission();
+	// }, []);
+
+	// const requestLocPermission = async () => {
+	// 	try {
+	// 	  const granted = await PermissionsAndroid.request(
+	// 		PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+	// 		{
+	// 		  title: 'Location Access',
+	// 		  message:'',
+	// 		  buttonNeutral: 'Ask Me Later',
+	// 		  buttonNegative: 'Cancel',
+	// 		  buttonPositive: 'OK',
+	// 		},
+	// 	  );
+	// 	  if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+	// 		console.log('You can use the Location');
+			
+	// 	  } else {
+	// 		console.log('Location permission denied');
+	// 	  }
+	// 	} catch (err) {
+	// 	  console.warn(err);
+	// 	}
+	// };
+
+
+	
+	
   
 	useEffect(() => {
 	  
 		(async () => {
 		
-		let location = await Location.getCurrentPositionAsync({});
-		setLocation(location);
-		console.log(location);
+			const result = await Location.requestForegroundPermissionsAsync();
+			console.log("requesting...");
+			let location = await Location.getCurrentPositionAsync({});
+			console.log("got location");
+			setLocation(location);	
 	  })();
 
 	}, []);
@@ -199,8 +202,9 @@ export default function BookRideScreen({route}) {
 		
 		try{
 
+			
 			const loc = location;
-			console.log(loc.coords.latitude);
+			console.log("loc " + location.coords.latitude);
 			setPLat(loc.coords.latitude);
 			setPLong(loc.coords.longitude);
 
@@ -240,8 +244,8 @@ export default function BookRideScreen({route}) {
 				plong: pLong,
 
 			}
-			await setDoc(doc(db, "BookedRides", bookingId), docData);
-			console.log("Ride Booked Sucessfully!");
+			await setDoc(doc(db, "RideReq", driverId), docData);
+			console.log("Req Send Sucessfully!");
 			// setContent("Booked!");
 
 
@@ -271,7 +275,7 @@ export default function BookRideScreen({route}) {
 		
 	<View className="">
 	  
-	<View className="flex-row justify-between pt-100 font-extrabold text-2x" style={{backgroundColor: "#540C97"}}>
+	<View className="fl flex-row justify-between pt-100 font-extrabold text-2x" style={{backgroundColor: "#540C97"}}>
 
 		<SafeAreaView className="flex">
 
@@ -300,7 +304,7 @@ export default function BookRideScreen({route}) {
 
 			{/* <View style={newColoe()} >Hello</View> */}
 
-	  <Image source={require("../img/woman.jpg")}
+	  <Image source={require("../img/man.jpg")}
 	  style={{width:responsiveWidth(70), height:responsiveWidth(70), borderWidth: 4, borderColor: "black"}} 
 	  className="rounded-full mt-10 border-s-black"
 
@@ -340,7 +344,7 @@ export default function BookRideScreen({route}) {
 	  	onPress={handlePress}
 	  	className="w-80 h-12 bg-yellow-400 justify-center flex-row rounded-lg mt-10 mb-64"
 	  >
-		<Text className="pt-1 font-extrabold text-2xl text-black border-blue-950">Book Ride</Text>
+		<Text className="pt-1 font-extrabold text-2xl text-black border-blue-950">Request Ride</Text>
 	  </TouchableOpacity>
 
 

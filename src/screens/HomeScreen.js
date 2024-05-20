@@ -11,6 +11,8 @@ import { useNavigation } from "@react-navigation/native";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import SearchRideScreen from "./SearchRideScreen";
 import { responsiveHeight, responsiveWidth } from "react-native-responsive-dimensions";
+import MapView from "react-native-maps";
+import {Marker} from 'react-native-maps';
 
 
 
@@ -79,17 +81,32 @@ export default function HomeScreen({route}){
 		<View className='flex-1 bg-white px-8 rounded-3xl' style={{borderTopRadius: 20}}>
 			
 
-				<View className="mt-0">
+<View className="mt-3">
+
+		<MapView
+				className="rounded-2xl mb-3"
+				style = {{width: responsiveWidth(85), height: responsiveHeight(35), justifyContent:"center"}}
+				// className="h-full w-100 mt-2"
+				initialRegion={{
+				latitude: 21.151744,
+				longitude: 79.0888448,
+				latitudeDelta: 0.0922,
+				longitudeDelta: 0.0421,
+				}}
+		>
+			<Marker
+				coordinate={{latitude: 21.151744, longitude: 79.0888448}}
 				
-		<Image 
-				source={require("../img/img3.png")} 
-			 	style = {{width: responsiveWidth(85), height: responsiveHeight(30), justifyContent:"center"}}
-				className="rounded-3xl mt-2"
 			/>
-			<View className="flex items-center justify-center">
+			
+
+		
+				
+		
+			<View className="flex items-center justify-center" style={{position:"absolute"}}>
 			<Text className="font-bold text-lg mt-2 mb-2" style={{color:"#540C97"}}>Let's Book a Ride!</Text>
 			</View>
-			
+			</MapView>
 
 </View>
   
@@ -125,6 +142,8 @@ export default function HomeScreen({route}){
 			  </TouchableOpacity>	
   
 		  </View>
+
+		  
   
 		  <Text className="text-xl text-gray-700 font-bold text-center py-5">
 			  OR
@@ -152,7 +171,7 @@ export default function HomeScreen({route}){
 				  className="py-3 mt-12 bg-yellow-400 rounded-xl"
 			  >
 				  <Text className="font-xl font-bold text-center text-gray-700">
-					  All ride bookings
+					  All ride bookings for driver
 				  </Text>
 				  
 				  

@@ -40,6 +40,7 @@ import SearchRideScreen from '../Screens/SearchRideScreen';
 import BookRideScreen from '../Screens/BookRideScreen';
 import MyTabs from './AllRideBookingNavigation';
 import MapScreen from '../Screens/MapScreen';
+import LoggedInNavigation from './LoggedInNavigation';
 
 const Stack = createNativeStackNavigator();
 
@@ -62,7 +63,7 @@ export default function AppNavigation(){
 			<Stack.Navigator initialRouteName='Home' 
 			screenOptions={{headerShown: false}}
 			>
-
+				{/* <Stack.Screen name="LoggedinNavigation" component={LoggedInNavigation} /> */}
 				
 				<Stack.Screen name="Home" component = {HomeScreen} />
 				<Stack.Screen name="AllRideBooking" component={MyTabs} />

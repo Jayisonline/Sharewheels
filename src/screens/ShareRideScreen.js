@@ -38,9 +38,9 @@ export default function ShareRideScreen() {
 	// console.log(seats);
 	// console.log(fare);
 
-	useEffect(()=>{
-		requestLocPermission();
-	}, []);
+	// useEffect(()=>{
+	// 	requestLocPermission();
+	// }, []);
 
 	const requestLocPermission = async () => {
 		try {
@@ -74,8 +74,11 @@ export default function ShareRideScreen() {
 		
 		
   
-		let location = await Location.getCurrentPositionAsync({});
-		setLocation(location);
+			const result = await Location.requestForegroundPermissionsAsync();
+			console.log("requesting...");
+			let location = await Location.getCurrentPositionAsync({});
+			console.log("got location");
+			setLocation(location);	
 	  })();
 
 	}, []);

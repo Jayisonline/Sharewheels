@@ -8,7 +8,7 @@ const Tab = createMaterialTopTabNavigator();
 
 export default function MyTabs() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator className="mt-7">
       <Tab.Screen name="RideReq" component={RideReqScreen} />
       <Tab.Screen name="AcceptedReq" component={AcceptedReqScreen} />
     </Tab.Navigator>
