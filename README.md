@@ -1,9 +1,13 @@
-<h1>Share wheels</h1> 
+<h1>ShareWheels 🚗💨</h1> 
 <h2>ride-sharing application</h2>
- Group-A6 </br>
- Vedanti Dabhade </br>
- Jay Khapre </br>
- Vedant Deshmukh </br>
+
+
+
+
+ShareWheels is a smart and user-friendly carpooling platform designed to make daily travel more affordable, efficient, and eco-friendly. The application connects drivers and passengers traveling in the same direction, enabling them to share rides, reduce travel costs, and minimize traffic congestion.
+
+Built using modern mobile development technologies, ShareWheels focuses on real-time ride coordination, live tracking, secure authentication, and seamless user experience.
+
 
  <h3>Project Installation Guide:</h3>
 
