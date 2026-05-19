@@ -9,6 +9,74 @@ ShareWheels is a smart and user-friendly carpooling platform designed to make da
 Built using modern mobile development technologies, ShareWheels focuses on real-time ride coordination, live tracking, secure authentication, and seamless user experience.
 
 
+
+## 📸 Screenshots
+
+<p align="center">
+  <img src="assets/Overview/1 (12).png" width="440"/>
+  
+</p>
+
+
+
+<p align="center">
+  <img src="assets/Overview/1 (11).png" width="440"/>
+  
+</p>
+<p align="center">
+  <img src="assets/Overview/1 (10).png" width="440"/>
+  
+</p>
+<p align="center">
+  <img src="assets/Overview/1 (9).png" width="440"/>
+  
+</p>
+<p align="center">
+  <img src="assets/Overview/1 (8).png" width="440"/>
+  
+</p>
+<p align="center">
+  <img src="assets/Overview/1 (7).png" width="440"/>
+  
+</p>
+<p align="center">
+  <img src="assets/Overview/1 (6).png" width="440"/>
+  
+</p>
+
+
+## Flow Diagram
+<p align="center">
+  <img src="assets/Overview/1 (5).png" width="660"/>
+  
+</p>
+
+
+## Class Diagram
+<p align="center">
+  <img src="assets/Overview/1 (4).png" width="660"/>
+  
+</p>
+
+<!-- <p align="center">
+  <img src="assets/Overview/1 (3).png" width="660"/>
+  
+</p> -->
+
+
+## Sequence Diagram
+<p align="center">
+  <img src="assets/Overview/1 (2).png" width="660"/>
+  
+</p>
+<p align="center">
+  <img src="assets/Overview/1 (1).png" width="660"/>
+  
+</p>
+
+
+
+
  <h3>Project Installation Guide:</h3>
 
  
